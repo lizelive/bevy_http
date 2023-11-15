@@ -1,4 +1,4 @@
-//! Implements a http asset io loader.
+#![doc = include_str!("../README.md")]
 
 use bevy::{
     asset::io::{AssetReader, AssetReaderError, AssetSource, AssetSourceId, PathStream, Reader},
