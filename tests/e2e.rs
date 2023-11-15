@@ -1,7 +1,7 @@
-use std::time::Duration;
+
 
 use bevy::{
-    app::{AppExit, ScheduleRunnerPlugin},
+    app::{AppExit},
     prelude::*,
 };
 
@@ -42,7 +42,7 @@ fn print_on_load(
     let custom_asset = custom_assets.get(&state.handle);
 
     if let Some(custom_asset) = custom_asset {
-        let length = custom_asset.bytes.len();
+        let _length = custom_asset.bytes.len();
         exit.send(AppExit);
     }
 }
