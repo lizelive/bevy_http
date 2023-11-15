@@ -1,11 +1,9 @@
-use std::fmt::Debug;
+
 
 use bevy::prelude::*;
 
 use bevy::{
-    asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
-    reflect::TypePath,
-    utils::BoxedFuture,
+    asset::{AssetLoader},
 };
 
 use bevy_http::HttpAssetReaderPlugin;
