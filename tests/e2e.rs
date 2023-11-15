@@ -19,7 +19,10 @@ struct State {
 fn main() {
     App::new()
         .add_plugins((
-            HttpAssetReaderPlugin,
+            HttpAssetReaderPlugin{
+                id: "remote".into(),
+                base_url: "https://bevyengine.org/".into(),
+            },
             DefaultPlugins,
             // ScheduleRunnerPlugin::run_loop(Duration::from_secs(1)),
             BytesAssetPlugin,
@@ -31,7 +34,7 @@ fn main() {
 }
 
 fn setup(mut state: ResMut<State>, asset_server: Res<AssetServer>) {
-    state.handle = asset_server.load("remote://icon.png");
+    state.handle = asset_server.load("remote://assets/icon.png");
 }
 
 fn print_on_load(
