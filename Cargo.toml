@@ -2,6 +2,11 @@
 name = "bevy_http"
 version = "0.1.0"
 edition = "2021"
+description = "Bevy HTTP asset loader plugin"
+repository = "https://github.com/lizelive/bevy_http"
+readme = "README.md"
+keywords = ["bevy", "http", "gamedev", "client", "wasm"]
+license = "MIT"
 
 [dependencies]
 futures-core = "0.3.29"
