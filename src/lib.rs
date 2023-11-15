@@ -17,16 +17,11 @@ pub struct HttpAssetReader {
 
 impl HttpAssetReader {
     /// Creates a new `HttpAssetReader`. The path provided will be used to build URLs to query for assets.
-    pub fn new(base_url: Option<&str>) -> Self {
-        let base_url = base_url.and_then(|s| surf::Url::parse(s).ok());
+    pub fn new(base_url: &str) -> Self {
+        let base_url = surf::Url::parse(base_url).expect("invalid base url");
 
         let client = surf::Config::new().set_timeout(Some(std::time::Duration::from_secs(5)));
-
-        let client = if let Some(base_url) = base_url {
-            client.set_base_url(base_url)
-        } else {
-            client
-        };
+        let client = client.set_base_url(base_url);
 
         let client = client.try_into().expect("could not create http client");
 
@@ -118,15 +113,18 @@ impl AssetReader for HttpAssetReader {
 }
 
 /// A plugins that registers the `HttpAssetReader` as an asset source.
-pub struct HttpAssetReaderPlugin;
+pub struct HttpAssetReaderPlugin {
+    pub id: String,
+    pub base_url: String,
+}
 
 impl Plugin for HttpAssetReaderPlugin {
     fn build(&self, app: &mut App) {
+        let id = self.id.clone();
+        let base_url = self.base_url.clone();
         app.register_asset_source(
-            AssetSourceId::Name("remote".into()),
-            AssetSource::build().with_reader(|| {
-                Box::new(HttpAssetReader::new(Some("https://bevyengine.org/assets/")))
-            }),
+            AssetSourceId::Name(id.into()),
+            AssetSource::build().with_reader(move || Box::new(HttpAssetReader::new(&base_url))),
         );
     }
 }
